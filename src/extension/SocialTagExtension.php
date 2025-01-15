@@ -1,10 +1,7 @@
 <?php
 
 namespace Leochenftw\Extension;
-use SilverStripe\Core\Convert;
 use SilverStripe\SiteConfig\SiteConfig;
-use SilverStripe\Assets\Image;
-use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextareaField;
@@ -14,8 +11,8 @@ use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\Control\Director;
 use Leochenftw\Debugger;
-use Cita\ImageCropper\Model\CitaCroppableImage;
-use Cita\ImageCropper\Fields\CroppableImageField;
+use SilverStripe\Assets\Image;
+use SilverStripe\AssetAdmin\Forms\UploadField;
 
 /**
  * @file SocialTagExtension
@@ -40,10 +37,10 @@ class SocialTagExtension extends DataExtension
     ];
 
     private static $has_one =  [
-        'OGImage'               =>  CitaCroppableImage::class,
-        'OGImageLarge'          =>  CitaCroppableImage::class,
-        'TwitterImage'          =>  CitaCroppableImage::class,
-        'TwitterImageLarge'     =>  CitaCroppableImage::class
+        'OGImage'               =>  Image::class,
+        'OGImageLarge'          =>  Image::class,
+        'TwitterImage'          =>  Image::class,
+        'TwitterImageLarge'     =>  Image::class
     ];
 
     /**
@@ -153,12 +150,12 @@ class SocialTagExtension extends DataExtension
                                         'OGDescription',
                                         'Description'
                                     );
-            $og_image           =   CroppableImageField::create('OGImage', 'Square Image', $this->owner)
-                                        ->setCropperRatio(1)
+            $og_image           =   UploadField::create('OGImage', 'Square Image')
                                         ->setDescription('Image must be uploaded at a ratio of 1:1 (square)');
-            $og_large_image     =   CroppableImageField::create('OGImageLarge', 'Landscape Image', $this->owner)
-                                        ->setCropperRatio(1.91)
+            $og_image->getValidator()->setAllowedExtensions(['jpg', 'jpeg', 'png', 'gif']);
+            $og_large_image     =   UploadField::create('OGImageLarge', 'Landscape Image')
                                         ->setDescription('Image must be uploaded at a ratio of 1200/630 (landscape)');
+            $og_large_image->getValidator()->setAllowedExtensions(['jpg', 'jpeg', 'png', 'gif']);
 
             $og                 =   ToggleCompositeField::create(
                                         'OG',
@@ -203,13 +200,13 @@ class SocialTagExtension extends DataExtension
                                         'Use Meta Description as Twitter Description'
                                     );
             $tw_desc            =   TextareaField::create('TwitterDescription', 'Description');
-            $tw_image           =   CroppableImageField::create('TwitterImage', 'Square Image', $this->owner)
-                                        ->setCropperRatio(1)
+            $tw_image           =   UploadField::create('TwitterImage', 'Square Image')
                                         ->setDescription('Image must be uploaded at a ratio of 1:1 (square)');
-            $tw_large_image     =   CroppableImageField::create('TwitterImageLarge', 'Landscape Image', $this->owner)
+            $tw_image->getValidator()->setAllowedExtensions(['jpg', 'jpeg', 'png', 'gif']);
+            $tw_large_image     =   UploadField::create('TwitterImageLarge', 'Landscape Image')
                                         ->setFolderName('SEO')
-                                        ->setCropperRatio(2)
                                         ->setDescription('Image must be uploaded at a ratio of 2:1 (landscape)');
+            $tw_large_image->getValidator()->setAllowedExtensions(['jpg', 'jpeg', 'png', 'gif']);
 
             $twitter            =   ToggleCompositeField::create(
                                         'Twitter',

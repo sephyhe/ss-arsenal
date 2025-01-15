@@ -35,7 +35,7 @@ class MetaExtension extends DataExtension
     {
         if ($meta = $fields->fieldbyName('Root.Main.Metadata')) {
 
-            $fields->insertBefore(TextField::create('ConanicalURL'), 'MetaDescription');
+            $fields->insertBefore('MetaDescription', TextField::create('ConanicalURL'));
 
             $meta->push(
                 TextField::create('MetaKeywords')
