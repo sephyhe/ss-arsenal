@@ -5,12 +5,6 @@
     "homepage": "https://github.com/leochenftw/ss-arsenal",
     "license": "MIT",
     "keywords": ["library"],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/sephyhe/image-cropper.git"
-        }
-    ],
     "authors": [
         {
             "name": "Leo Chen",
@@ -37,7 +31,6 @@
         "silverstripe/lumberjack": "^3.2",
         "cocur/slugify": "^3.2",
         "guzzlehttp/guzzle": "^7.9",
-        "cita/image-cropper": "dev-master",
         "undefinedoffset/sortablegridfield": "^2",
         "dynamic/silverstripe-country-dropdown-field": "^2.0",
         "colymba/gridfield-bulk-editing-tools": "^4.1"
