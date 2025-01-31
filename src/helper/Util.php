@@ -279,7 +279,7 @@ class Util
             $content   =   str_replace('<img src="', '<img src="' . rtrim(Director::absoluteBaseURL(), '/'), $content);
         }
 
-        return $content;
+        return $content ?? '';
     }
 
     public static function get_initials($str, $ignore = ['with', 'to', 'from', 'of', 'via', 'by'])
